@@ -17,8 +17,9 @@ Deux comportements suspects ressortent nettement : un scan de ports et une exfil
   en contactent 8 au maximum.
 - Elle a généré **400 connexions entre 00:00 et 00:15 le 8 octobre**, soit 383 `DENY` sur 400. Cela explique
   le pic du 8 octobre (1 137 connexions) et représente 383 des 747 blocages du pare-feu.
-- Ces blocages touchent surtout RDP (3389), Telnet (23) et HTTPS : signature d'une reconnaissance
-  (*port scan*), probablement d'un poste compromis ou d'un usage malveillant interne.
+- Les ports visés sont variés et quasi aléatoires (aucun port n'est touché plus de 3 fois) et seules 17 tentatives
+  sont autorisées : c'est la signature d'une reconnaissance (*port scan*), probablement un poste compromis
+  ou un usage malveillant interne.
 - Preuve : figure `figures/ports_distincts_par_ip.png`.
 
 ### b) Exfiltration de données par `192.168.1.11`
@@ -38,5 +39,5 @@ Deux comportements suspects ressortent nettement : un scan de ports et une exfil
 3. **Filtrer le trafic sortant** : refuser le port 8080 vers l'extérieur et n'autoriser le DNS que vers
    les résolveurs internes ; mettre en place une alerte sur les volumes sortants anormaux.
 4. **Fermer Telnet (23) et restreindre RDP (3389)** : utiliser SSH avec clés, et RDP uniquement via VPN.
-5. **Isoler et réinitialiser la caméra `192.168.1.11`** (mot de passe par défaut, mise à jour du firmware).
+5. **Isoler et réinitialiser la caméra `192.168.1.11`** (changer les identifiants, mettre à jour le firmware).
 6. **Centraliser les logs** dans un SIEM avec des alertes automatiques pour ce type d'anomalie.
